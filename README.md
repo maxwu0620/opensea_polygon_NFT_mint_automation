@@ -23,7 +23,7 @@ https://opensea.io/collection/cryptoverse-lone-wanderer
 
 # Important Notes please read before starting: 
 1. Do not move anything in or out of the main script folder.
-2. Make sure your files are numbered cronologically, the upload loop relies on that heavily (here is a link to a handy script which does that for you: )
+2. Make sure your files are numbered cronologically, the upload loop relies on that heavily (here is a link to a handy script which does that for you: https://github.com/FireMarshmallow/Easy-file-renamer)
 3. If the given upload amount it larger then the amount of files, the script will stop at the upload page after uploading and listing the last file
 4. Make sure all the file formats match (you can only bacth upload one file format at a time)
 5. The title will be followed by the file number, make sure to leave apropriate spacing at the end of your title if needed.
