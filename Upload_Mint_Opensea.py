@@ -11,10 +11,12 @@ root = tkinter.Tk()
 root.title("Opensea Uploade Automation")
 # _____TESTING_____
 
+main_directory = os.path.join(sys.path[0])
+
 
 def test_print_all_fealdst():  # DEBUG ONLY
     print("{0} {1}".format("img folder:", img_folder_path))
-    print("{0} {1}".format("repo_save_path:", repo_save_path))
+    # print("{0} {1}".format("repo_save_path:", repo_save_path))
     print("{0} {1}".format("Collection link:", collection_link_input.get()))
     print("{0} {1}".format("start num:", int(start_num_input.get())))
     print("{0} {1}".format("uplode amount:", int(uplode_amount.get())))
@@ -30,7 +32,7 @@ def open_chrome_profile():
             "start",
             "chrome",
             "--remote-debugging-port=8989",
-            "--user-data-dir=" + repo_save_path + "/chrome_profile",
+            "--user-data-dir=" + main_directory + "/chrome_profile",
         ],
         shell=True,
     )
@@ -40,7 +42,7 @@ def main_program_loop():  # DEBUG ONLY
     print("Main started")
 
     ###START###
-    project_path = repo_save_path
+    project_path = main_directory
     file_path = img_folder_path
     collection_link = collection_link_input.get()
     start_num = int(start_num_input.get())
@@ -178,7 +180,7 @@ def save_file_path():
 def Save():
     thing_to_save_for_next_time = [
         img_folder_path,
-        repo_save_path,
+        # repo_save_path,
         collection_link_input.get(),
         start_num_input.get(),
         int(uplode_amount.get()),
@@ -199,8 +201,8 @@ def open_save():
             global repo_save_path
             Name_change_img_folder_button(new_dict[0])
             img_folder_path = new_dict[0]
-            Name_change_chromdriver_button(new_dict[1])
-            repo_save_path = new_dict[1]
+            # Name_change_chromdriver_button(new_dict[1])
+            # repo_save_path = new_dict[1]
             collection_link_input_save(new_dict[2])
             start_num__save(new_dict[3])
             uplode_amount_save(new_dict[4])
@@ -249,8 +251,8 @@ def Name_change_img_folder_button(img_folder_input):
     img_folder_input_button["text"] = img_folder_input
 
 
-def Name_change_chromdriver_button(repo_save_path):
-    repo_save_loc_button["text"] = repo_save_path
+# def Name_change_chromdriver_button(repo_save_path):
+# repo_save_loc_button["text"] = repo_save_path
 
 
 # _____ASK_DIR_____
@@ -261,11 +263,12 @@ def img_folder_input():
     Name_change_img_folder_button(img_folder_path)
 
 
+"""
 def repo_save_loc_input():
     global repo_save_path
     repo_save_path = filedialog.askdirectory()
     Name_change_chromdriver_button(repo_save_path)
-
+"""
 
 # _____INPUTS_____
 # Button inputs
@@ -285,9 +288,7 @@ img_folder_input_button = tkinter.Button(
     root, height=3, width=60, text="Add Upload Folder", command=img_folder_input
 )
 
-repo_save_loc_button = tkinter.Button(
-    root, height=3, width=60, text="Repo save location:", command=repo_save_loc_input
-)
+# repo_save_loc_button = tkinter.Button(root, height=3, width=60, text="Repo save location:", command=repo_save_loc_input)
 
 
 # text inputs
@@ -319,7 +320,7 @@ file_format.insert(0, "")
 # _____GUI_LAYOUT_____
 img_folder_input_button.grid(row=0, columnspan=3)
 
-repo_save_loc_button.grid(row=1, columnspan=3)
+# repo_save_loc_button.grid(row=1, columnspan=3)
 
 collection_link_label.grid(row=2, column=0)
 collection_link_input.grid(row=2, column=1)
