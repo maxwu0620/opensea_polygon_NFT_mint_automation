@@ -9,21 +9,7 @@ from selenium.webdriver.support import expected_conditions as ExpectedConditions
 
 root = tkinter.Tk()
 root.title("Opensea Uploade Automation")
-# _____TESTING_____
-
 main_directory = os.path.join(sys.path[0])
-
-
-def test_print_all_fealdst():  # DEBUG ONLY
-    print("{0} {1}".format("img folder:", img_folder_path))
-    # print("{0} {1}".format("repo_save_path:", repo_save_path))
-    print("{0} {1}".format("Collection link:", collection_link_input.get()))
-    print("{0} {1}".format("start num:", int(start_num_input.get())))
-    print("{0} {1}".format("uplode amount:", int(uplode_amount.get())))
-    print("{0} {1}".format("price:", float(price.get())))
-    print("{0} {1}".format("title:", title.get()))
-    print("{0} {1}".format("file format:", file_format.get()))
-
 
 # _____MAIN_CODE_____
 def open_chrome_profile():
@@ -40,7 +26,6 @@ def open_chrome_profile():
 
 def main_program_loop():  # DEBUG ONLY
     print("Main started")
-
     ###START###
     project_path = main_directory
     file_path = img_folder_path
@@ -180,7 +165,6 @@ def save_file_path():
 def Save():
     thing_to_save_for_next_time = [
         img_folder_path,
-        # repo_save_path,
         collection_link_input.get(),
         start_num_input.get(),
         int(uplode_amount.get()),
@@ -201,14 +185,12 @@ def open_save():
             global repo_save_path
             Name_change_img_folder_button(new_dict[0])
             img_folder_path = new_dict[0]
-            # Name_change_chromdriver_button(new_dict[1])
-            # repo_save_path = new_dict[1]
-            collection_link_input_save(new_dict[2])
-            start_num__save(new_dict[3])
-            uplode_amount_save(new_dict[4])
-            price_save(new_dict[5])
-            title_save(new_dict[6])
-            file_format_save(new_dict[7])
+            collection_link_input_save(new_dict[1])
+            start_num__save(new_dict[2])
+            uplode_amount_save(new_dict[3])
+            price_save(new_dict[4])
+            title_save(new_dict[5])
+            file_format_save(new_dict[6])
     except FileNotFoundError:
         pass
 
@@ -251,10 +233,6 @@ def Name_change_img_folder_button(img_folder_input):
     img_folder_input_button["text"] = img_folder_input
 
 
-# def Name_change_chromdriver_button(repo_save_path):
-# repo_save_loc_button["text"] = repo_save_path
-
-
 # _____ASK_DIR_____
 # ask for directory on clicking button, changes button name.
 def img_folder_input():
@@ -262,21 +240,6 @@ def img_folder_input():
     img_folder_path = filedialog.askdirectory()
     Name_change_img_folder_button(img_folder_path)
 
-
-"""
-def repo_save_loc_input():
-    global repo_save_path
-    repo_save_path = filedialog.askdirectory()
-    Name_change_chromdriver_button(repo_save_path)
-"""
-
-# _____INPUTS_____
-# Button inputs
-"""
-TEST_BUTTON = tkinter.Button(
-    root, text="Test all", command=test_print_all_fealdst
-)  # DEBUG ONLY
-"""
 
 button_save = tkinter.Button(root, text="Save", command=Save)
 
@@ -287,8 +250,6 @@ open_browser = tkinter.Button(root, text="Open Browser", command=open_chrome_pro
 img_folder_input_button = tkinter.Button(
     root, height=3, width=60, text="Add Upload Folder", command=img_folder_input
 )
-
-# repo_save_loc_button = tkinter.Button(root, height=3, width=60, text="Repo save location:", command=repo_save_loc_input)
 
 
 # text inputs
@@ -320,8 +281,6 @@ file_format.insert(0, "")
 # _____GUI_LAYOUT_____
 img_folder_input_button.grid(row=0, columnspan=3)
 
-# repo_save_loc_button.grid(row=1, columnspan=3)
-
 collection_link_label.grid(row=2, column=0)
 collection_link_input.grid(row=2, column=1)
 open_browser.grid(row=2, column=2)
@@ -344,8 +303,6 @@ file_format.grid(row=7, column=1)
 button_start.grid(row=8, column=1)
 
 button_save.grid(row=8, column=2)
-
-# TEST_BUTTON.grid(row=100, column=0)  # DEBUG ONLY
 
 open_save()
 root.mainloop()
