@@ -38,6 +38,8 @@ uplode_amount = InputField(root, "uplode_amount:", 4, 0)
 price = InputField(root, "price:", 5, 0)
 title = InputField(root, "title:", 6, 0)
 file_format = InputField(root, "File format:", 7, 0)
+external_link = InputField(root, "External link:", 8, 0)
+description = InputField(root, "Description:", 9, 0)
 
 main_directory = os.path.join(sys.path[0])
 
@@ -66,6 +68,8 @@ def main_program_loop():  # DEBUG ONLY
     price_ALI = float(price.input_field.get())
     title_ALI = title.input_field.get()
     file_format_ALI = file_format.input_field.get()
+    external_link_ALI = str(external_link.input_field.get())
+    description_ALI = description.input_field.get()
 
     ##chromeoptions
     opt = Options()
@@ -111,6 +115,14 @@ def main_program_loop():  # DEBUG ONLY
         name.send_keys(
             title_ALI + str(start_num)
         )  # +1000 for other folders #change name before "#"
+        time.sleep(0.5)
+
+        ext_link = driver.find_element_by_xpath('//*[@id="external_link"]')
+        ext_link.send_keys(external_link_ALI)
+        time.sleep(0.5)
+
+        desc = driver.find_element_by_xpath('//*[@id="description"]')
+        desc.send_keys(description_ALI)
         time.sleep(0.5)
 
         create = driver.find_element_by_css_selector(
@@ -202,6 +214,8 @@ def Save():
         float(price.input_field.get()),
         title.input_field.get(),
         file_format.input_field.get(),
+        str(external_link.input_field.get()),
+        description.input_field.get(),
     ]
     with open(save_file_path(), "wb") as outfile:
         pickle.dump(thing_to_save_for_next_time, outfile)
@@ -213,16 +227,16 @@ def open_save():
         with open(save_file_path(), "rb") as infile:
             new_dict = pickle.load(infile)
             global img_folder_path
-
             Name_change_img_folder_button(new_dict[0])
             img_folder_path = new_dict[0]
-
             collection_link_input.insert_text(new_dict[1])
             start_num_input.insert_text(new_dict[2])
             uplode_amount.insert_text(new_dict[3])
             price.insert_text(new_dict[4])
             title.insert_text(new_dict[5])
             file_format.insert_text(new_dict[6])
+            external_link.insert_text(new_dict[7])
+            description.insert_text(new_dict[8])
 
     except FileNotFoundError:
         pass
@@ -252,7 +266,6 @@ img_folder_input_button = tkinter.Button(
 )
 img_folder_input_button.grid(row=0, columnspan=3)
 #####BUTTON ZONE END#######
-
 
 open_save()
 root.mainloop()
