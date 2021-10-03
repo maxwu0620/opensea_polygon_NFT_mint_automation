@@ -1,15 +1,46 @@
-import tkinter, subprocess
+import tkinter
+import subprocess
+from tkinter import *
 from tkinter import filedialog
-import os, sys, pickle, time
+import os
+import sys
+import pickle
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as ExpectedConditions
 
-root = tkinter.Tk()
+
+class InputField:
+    def __init__(self, master, label, row_io, column_io):
+        self.master = master
+        # self.entry = Entry(master)
+        self.input_field = Entry(self.master)
+        self.input_field.label = Label(master, text=label)
+        self.input_field.label.grid(row=row_io, column=column_io)
+        self.input_field.grid(row=row_io, column=column_io + 1)
+        # self.entry.insert(0, "")
+
+    def insert_text(self, text):
+        self.input_field.delete(0, "end")
+        self.input_field.insert(0, text)
+
+
+root = Tk()
 root.title("Opensea Uploade Automation")
+
+
+collection_link_input = InputField(root, "Collection_link:", 2, 0)
+start_num_input = InputField(root, "Start num:", 3, 0)
+uplode_amount = InputField(root, "uplode_amount:", 4, 0)
+price = InputField(root, "price:", 5, 0)
+title = InputField(root, "title:", 6, 0)
+file_format = InputField(root, "File format:", 7, 0)
+
 main_directory = os.path.join(sys.path[0])
+
 
 # _____MAIN_CODE_____
 def open_chrome_profile():
@@ -29,12 +60,12 @@ def main_program_loop():  # DEBUG ONLY
     ###START###
     project_path = main_directory
     file_path = img_folder_path
-    collection_link = collection_link_input.get()
-    start_num = int(start_num_input.get())
-    up_amount = int(uplode_amount.get())
-    price_ALI = float(price.get())
-    title_ALI = title.get()
-    file_format_ALI = file_format.get()
+    collection_link = collection_link_input.input_field.get()
+    start_num = int(start_num_input.input_field.get())
+    up_amount = int(uplode_amount.input_field.get())
+    price_ALI = float(price.input_field.get())
+    title_ALI = title.input_field.get()
+    file_format_ALI = file_format.input_field.get()
 
     ##chromeoptions
     opt = Options()
@@ -165,12 +196,12 @@ def save_file_path():
 def Save():
     thing_to_save_for_next_time = [
         img_folder_path,
-        collection_link_input.get(),
-        start_num_input.get(),
-        int(uplode_amount.get()),
-        float(price.get()),
-        title.get(),
-        file_format.get(),
+        collection_link_input.input_field.get(),
+        start_num_input.input_field.get(),
+        int(uplode_amount.input_field.get()),
+        float(price.input_field.get()),
+        title.input_field.get(),
+        file_format.input_field.get(),
     ]
     with open(save_file_path(), "wb") as outfile:
         pickle.dump(thing_to_save_for_next_time, outfile)
@@ -182,58 +213,27 @@ def open_save():
         with open(save_file_path(), "rb") as infile:
             new_dict = pickle.load(infile)
             global img_folder_path
-            global repo_save_path
+
             Name_change_img_folder_button(new_dict[0])
             img_folder_path = new_dict[0]
-            collection_link_input_save(new_dict[1])
-            start_num__save(new_dict[2])
-            uplode_amount_save(new_dict[3])
-            price_save(new_dict[4])
-            title_save(new_dict[5])
-            file_format_save(new_dict[6])
+
+            collection_link_input.insert_text(new_dict[1])
+            start_num_input.insert_text(new_dict[2])
+            uplode_amount.insert_text(new_dict[3])
+            price.insert_text(new_dict[4])
+            title.insert_text(new_dict[5])
+            file_format.insert_text(new_dict[6])
+
     except FileNotFoundError:
         pass
 
 
-# _____TEXT_CHANGERS_____
-
-# adds text to enter element.
-def collection_link_input_save(collection_link_from_save):
-    collection_link_input.delete(0, "end")
-    collection_link_input.insert(0, collection_link_from_save)
-
-
-def start_num__save(start_num_from_save):
-    start_num_input.delete(0, "end")
-    start_num_input.insert(0, start_num_from_save)
-
-
-def uplode_amount_save(uplode_amount_from_save):
-    uplode_amount.delete(0, "end")
-    uplode_amount.insert(0, uplode_amount_from_save)
-
-
-def price_save(price_from_save):
-    price.delete(0, "end")
-    price.insert(0, price_from_save)
-
-
-def file_format_save(file_format_from_save):
-    file_format.delete(0, "end")
-    file_format.insert(0, file_format_from_save)
-
-
-def title_save(title_from_save):
-    title.delete(0, "end")
-    title.insert(0, title_from_save)
-
-
+#####BUTTON ZONE#######
 # changes the name of Button to path.
 def Name_change_img_folder_button(img_folder_input):
     img_folder_input_button["text"] = img_folder_input
 
 
-# _____ASK_DIR_____
 # ask for directory on clicking button, changes button name.
 def img_folder_input():
     global img_folder_path
@@ -242,67 +242,17 @@ def img_folder_input():
 
 
 button_save = tkinter.Button(root, text="Save", command=Save)
-
+button_save.grid(row=20, column=2)
 button_start = tkinter.Button(root, text="Start", command=main_program_loop)
-
+button_start.grid(row=20, column=1)
 open_browser = tkinter.Button(root, text="Open Browser", command=open_chrome_profile)
-
+open_browser.grid(row=2, column=2)
 img_folder_input_button = tkinter.Button(
     root, height=3, width=60, text="Add Upload Folder", command=img_folder_input
 )
-
-
-# text inputs
-collection_link_label = tkinter.Label(root, text="Collection_link:")
-collection_link_input = tkinter.Entry(root)
-collection_link_input.insert(0, "")
-
-start_num_input_label = tkinter.Label(root, text="Start num:")
-start_num_input = tkinter.Entry(root)
-start_num_input.insert(0, "")
-
-uplode_amount_label = tkinter.Label(root, text="Uplode amount:")
-uplode_amount = tkinter.Entry(root)
-uplode_amount.insert(0, "")
-
-price_label = tkinter.Label(root, text="Set price:")
-price = tkinter.Entry(root)
-price.insert(0, "")
-
-title_label = tkinter.Label(root, text="Title:")
-title = tkinter.Entry(root)
-title.insert(0, "")
-
-file_format_label = tkinter.Label(root, text="File format:")
-file_format = tkinter.Entry(root)
-file_format.insert(0, "")
-
-
-# _____GUI_LAYOUT_____
 img_folder_input_button.grid(row=0, columnspan=3)
+#####BUTTON ZONE END#######
 
-collection_link_label.grid(row=2, column=0)
-collection_link_input.grid(row=2, column=1)
-open_browser.grid(row=2, column=2)
-
-start_num_input_label.grid(row=3, column=0)
-start_num_input.grid(row=3, column=1)
-
-uplode_amount_label.grid(row=4, column=0)
-uplode_amount.grid(row=4, column=1)
-
-price_label.grid(row=5, column=0)
-price.grid(row=5, column=1)
-
-title_label.grid(row=6, column=0)
-title.grid(row=6, column=1)
-
-file_format_label.grid(row=7, column=0)
-file_format.grid(row=7, column=1)
-
-button_start.grid(row=8, column=1)
-
-button_save.grid(row=8, column=2)
 
 open_save()
 root.mainloop()
