@@ -17,7 +17,6 @@ root.title("Opensea Upload Automation")
 input_save_list = ["Upload folder:", 0, 0, 0, 0, 0, 0, 0, 0]
 main_directory = os.path.join(sys.path[0])
 
-
 def open_chrome_profile():
     subprocess.Popen(
         [
@@ -86,7 +85,6 @@ def save():
     external_link.save_inputs(7)
     description.save_inputs(8)
 
-
 # _____MAIN_CODE_____
 def main_program_loop():  # DEBUG ONLY
     print("Main started")
@@ -112,7 +110,7 @@ def main_program_loop():  # DEBUG ONLY
     wait = WebDriverWait(driver, 60)
 
     ###wait for methods
-    def wait_for(code):
+    def wait_css_selector(code):
         wait.until(
             ExpectedConditions.presence_of_element_located((By.CSS_SELECTOR, code))
         )
@@ -120,14 +118,15 @@ def main_program_loop():  # DEBUG ONLY
     def wait_xpath(code):
         wait.until(ExpectedConditions.presence_of_element_located((By.XPATH, code)))
 
+
     while up_amount != 0:
         print(str(start_num) + " and this many left > " + str(up_amount))
-        url = collection_link
-        driver.get(url)
+        driver.get(collection_link)
         # time.sleep(3)
 
-        wait_for(".styles__StyledLink-sc-l6elh8-0.cnTbOd.Blockreact__Block-sc-1xf18x6-0.Buttonreact__StyledButton-sc-glfma3-0.bhqEJb.gMiESj")
-        additem = driver.find_element_by_css_selector(".styles__StyledLink-sc-l6elh8-0.cnTbOd.Blockreact__Block-sc-1xf18x6-0.Buttonreact__StyledButton-sc-glfma3-0.bhqEJb.gMiESj")
+        wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
+        additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
+        #additem = driver.find_element_by_css_selector("a[class='styles__StyledLink-sc-l6elh8-0 ekTmzq Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
         additem.click()
         time.sleep(1)
 
@@ -148,35 +147,35 @@ def main_program_loop():  # DEBUG ONLY
         desc.send_keys(loop_description)
         time.sleep(0.5)
 
-        create = driver.find_element_by_css_selector(".Blockreact__Block-sc-1xf18x6-0.Buttonreact__StyledButton-sc-glfma3-0.bhqEJb.gMiESj")
+        create = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/section/div[2]/form/div/div[1]/span/button')
         create.click()
         time.sleep(1)
 
-        wait_for(".Iconreact__Icon-sc-1gugx8q-0.Modalreact__StyledIcon-sc-xyql9f-1.irnoQt.byuytI.material-icons")
-        cross = driver.find_element_by_css_selector(".Iconreact__Icon-sc-1gugx8q-0.Modalreact__StyledIcon-sc-xyql9f-1.irnoQt.byuytI.material-icons")
+        wait_css_selector("i[aria-label='Close'")
+        cross = driver.find_element_by_css_selector("i[aria-label='Close'")
         cross.click()
         time.sleep(1)
 
         main_page = driver.current_window_handle
 
-        wait_for("a[class='styles__StyledLink-sc-l6elh8-0 cnTbOd Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 jxgnwF gMiESj OrderManager--second-button']")
-        sell = driver.find_element_by_css_selector("a[class='styles__StyledLink-sc-l6elh8-0 cnTbOd Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 jxgnwF gMiESj OrderManager--second-button']")
+        wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
+        sell = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/div/span[2]/a')
         sell.click()
         # time.sleep(1)
 
-        wait_for("input[placeholder='Amount']")
+        wait_css_selector("input[placeholder='Amount']")
         amount = driver.find_element_by_css_selector("input[placeholder='Amount']")
         # amount.click()
         amount.send_keys(str(loop_price))
         # time.sleep(1)
 
-        wait_for("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
-        listing = driver.find_element_by_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
+        wait_css_selector("button[type='submit']")
+        listing = driver.find_element_by_css_selector("button[type='submit']")
         listing.click()
         # time.sleep(1)
 
         # time.sleep(5)
-        wait_for("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
+        wait_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
         sign = driver.find_element_by_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
         sign.click()
         time.sleep(2)
@@ -199,9 +198,8 @@ def main_program_loop():  # DEBUG ONLY
         start_num = start_num + 1
         up_amount = up_amount - 1
 
-
 #####BUTTON ZONE#######
-button_save = tkinter.Button(root, text="Save", command=save)  # chnage
+button_save = tkinter.Button(root, text="Save", command=save) 
 button_save.grid(row=20, column=2)
 button_start = tkinter.Button(root, text="Start", command=main_program_loop)
 button_start.grid(row=20, column=1)
@@ -209,7 +207,6 @@ open_browser = tkinter.Button(root, text="Open Browser", command=open_chrome_pro
 open_browser.grid(row=2, column=2)
 upload_folder_input_button = tkinter.Button(root, height=3, width=60, text="Add Upload Folder", command=upload_folder_input)
 upload_folder_input_button.grid(row=0, columnspan=3)
-
 try:
     with open(save_file_path(), "rb") as infile:
         new_dict = pickle.load(infile)
