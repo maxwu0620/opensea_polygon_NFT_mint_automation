@@ -175,8 +175,8 @@ def main_program_loop():  # DEBUG ONLY
         # time.sleep(1)
 
         # time.sleep(5)
-        wait_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
-        sign = driver.find_element_by_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb gMiESj']")
+        wait_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb fzwDgL']")
+        sign = driver.find_element_by_css_selector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb fzwDgL']")
         sign.click()
         time.sleep(2)
         ###login backup location
@@ -187,8 +187,8 @@ def main_program_loop():  # DEBUG ONLY
         # change the control to signin page
         driver.switch_to.window(login_page)
         # time.sleep(5)
-        wait_xpath('//*[@id="app-content"]/div/div[3]/div/div[3]/button[2]')
-        sign = driver.find_element_by_xpath('//*[@id="app-content"]/div/div[3]/div/div[3]/button[2]')
+        wait_css_selector("button[data-testid='request-signature__sign']")
+        sign = driver.find_element_by_css_selector("button[data-testid='request-signature__sign']")
         sign.click()
         time.sleep(1)
         # change control to main page
