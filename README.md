@@ -5,7 +5,8 @@
 ### This is an open-source project made for the NFT Community. 
 If you want to support this project or me, please check out my NFTs and maybe buy some, i accept most bids.
 https://opensea.io/collection/cryptoverse-lone-wanderer
-
+or Donate below:
+https://paypal.me/CloudMaking?locale.x=en_GB
 ---
 
 # INSTRUCTIONS
