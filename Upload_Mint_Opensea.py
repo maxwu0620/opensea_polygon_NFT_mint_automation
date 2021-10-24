@@ -151,8 +151,8 @@ def main_program_loop():  # DEBUG ONLY
         create.click()
         time.sleep(1)
 
-        wait_css_selector("i[aria-label='Close'")
-        cross = driver.find_element_by_css_selector("i[aria-label='Close'")
+        wait_css_selector("i[aria-label='Close']")
+        cross = driver.find_element_by_css_selector("i[aria-label='Close']")
         cross.click()
         time.sleep(1)
 
