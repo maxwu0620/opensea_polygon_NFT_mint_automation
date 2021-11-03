@@ -1,4 +1,4 @@
-# opensea_mint_and_list_automation
+# opensea_polygon_mint_and_list_automation
 [Disclaimer: Only works with the Metamask wallet and Polygon colelctions (check the Auto_Chrome_Browser repo for presets and customisation options) feel free to DM on twitter and i can help you for your use case] https://github.com/cloudmaking/Auto_Chrome_Browser
 ## Batch Mint and List NFTs on Opensea. This script uses selenium python to automate a chrome driver, letting you batch upload and list however many pictures or files as you want. 
 
